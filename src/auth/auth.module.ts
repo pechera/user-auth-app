@@ -6,11 +6,13 @@ import { AuthService } from './auth.service';
 import { BcryptService } from './bcrypt.service';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
   imports: [
     UsersModule,
+    RedisModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

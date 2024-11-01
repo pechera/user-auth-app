@@ -10,6 +10,10 @@ export class ConfigDto {
   @IsNotEmpty()
   DATABASE_URL: string;
 
+  @IsString()
+  @IsNotEmpty()
+  REDIS_URL: string;
+
   @IsEnum(Environment)
   NODE_ENV: Environment = Environment.DEVELOPMENT;
 }

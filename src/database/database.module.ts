@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { DATABASE_CONNECTION_KEY } from '@common/decorators/database.decorator';
+import { DATABASE_CONNECTION_KEY } from '@common/constants/database.constant';
 import { DatabaseService } from './database.service';
 
 @Module({

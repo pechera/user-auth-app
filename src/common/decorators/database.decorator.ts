@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
-
-export const DATABASE_CONNECTION_KEY = 'DATABASE_CONNECTION';
+import { DATABASE_CONNECTION_KEY } from '@common/constants/database.constant';
 
 export function InjectDatabase() {
   return Inject(DATABASE_CONNECTION_KEY);

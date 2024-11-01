@@ -13,8 +13,8 @@ export class AuthController {
   @Post('signup')
   @HttpCode(HttpStatus.CREATED)
   signUp(@Body() singUpDto: SingUpDto) {
-    const { username, fullname, password } = singUpDto;
-    return this.authService.signUp(username, fullname, password);
+    const { username, fullName, password } = singUpDto;
+    return this.authService.signUp(username, fullName, password);
   }
 
   @Post('signin')

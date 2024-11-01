@@ -9,7 +9,7 @@ export class SingUpDto {
   @IsDefined()
   @IsNotEmpty()
   @MaxLength(256)
-  readonly fullname: string;
+  readonly fullName: string;
 
   @IsDefined()
   @IsNotEmpty()

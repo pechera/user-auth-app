@@ -15,11 +15,10 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
-      // whitelist: true,
       forbidUnknownValues: true,
       stopAtFirstError: true,
-      // validateCustomDecorators: true,
-    }),
+      validateCustomDecorators: true
+    })
   );
 
   await app.listen(port, () => {

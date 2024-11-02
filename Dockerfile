@@ -13,6 +13,8 @@ EXPOSE 3000
 COPY src /user-auth-app/src
 
 RUN yarn build
+RUN yarn db:generate
+RUN yarn db:push
 
 COPY development.env .env
 

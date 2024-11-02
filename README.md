@@ -1,6 +1,6 @@
 # Auth service using NestJS, Drizzle ORM, PostgreSQL and Redis
 
-### How to scale the app
+### How to start the app
 
 ### How to scale the app
 
@@ -15,7 +15,7 @@ After implementing these recommendations, you can start implementing clustering.
 
 Here is an example of Google OAuth integration without using third-party libraries:
 
-- Create a project and get сredentials in Google Developer Console.
+- Create a project and get сredentials in Google Developer Console
 - Create a callback enpoint to which a webhook will be sent after successful user authorization
 - Get an access token and user data through Google API via two GET requests to the authorization API
 - Provide the user with the access token and check its validity in subsequent requests

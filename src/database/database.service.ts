@@ -32,7 +32,7 @@ export class DatabaseService {
   async onApplicationShutdown(signal: string) {
     return new Promise<void>(async (resolve) => {
       await this.pool.end();
-      console.log('pg off');
+      this.logger.log('Database off');
       resolve();
     });
   }

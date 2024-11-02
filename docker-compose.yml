@@ -2,7 +2,7 @@ version: '3'
 
 services:
   user-auth-app:
-    build: ./user-auth-app
+    build: .
     container_name: user-auth-app
     restart: always
     stdin_open: true

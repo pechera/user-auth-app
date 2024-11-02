@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { Redis } from 'ioredis';
 import { ConfigService } from '@nestjs/config';
 
-import { Redis } from 'ioredis';
+import { Environment } from '@common/enums/environment.enum';
 
 @Injectable()
 export class RedisService {
+  logger: Logger;
   redisClient: Redis;
 
   constructor(private readonly configService: ConfigService) {
+    this.logger = new Logger(RedisService.name);
     this.redisClient = new Redis(this.configService.get<string>('REDIS_URL'));
   }
 
@@ -21,5 +24,14 @@ export class RedisService {
 
   async get(key: string): Promise<string> {
     return this.redisClient.get(key);
+  }
+
+  async onApplicationShutdown(signal: string) {
+    return new Promise<void>(async (resolve) => {
+      await this.redisClient.ping();
+      await this.redisClient.quit();
+      this.logger.log('Redis off');
+      resolve();
+    });
   }
 }

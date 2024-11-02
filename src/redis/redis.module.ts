@@ -1,4 +1,5 @@
-import { Global, Module, OnApplicationShutdown } from '@nestjs/common';
+import { Module, OnApplicationShutdown } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 
 import { REDIS_CONNECTION_KEY } from '@common/constants/redis.constant';
 import { RedisService } from './redis.service';
@@ -16,4 +17,13 @@ import { RedisService } from './redis.service';
   ],
   exports: [REDIS_CONNECTION_KEY, RedisService]
 })
-export class RedisModule {}
+export class RedisModule implements OnApplicationShutdown {
+  constructor(private readonly moduleRef: ModuleRef) {}
+
+  async onApplicationShutdown(signal?: string): Promise<void> {
+    return new Promise<void>(async (resolve) => {
+      const redis = this.moduleRef.get(REDIS_CONNECTION_KEY);
+      redis.quit();
+    });
+  }
+}

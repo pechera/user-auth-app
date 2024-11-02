@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
 import { drizzle } from 'drizzle-orm/node-postgres';
@@ -10,20 +10,30 @@ import { Environment } from '@common/enums/environment.enum';
 
 @Injectable()
 export class DatabaseService {
-  constructor(private readonly configService: ConfigService) {}
+  logger: Logger;
+  private pool: Pool;
+
+  constructor(private readonly configService: ConfigService) {
+    this.logger = new Logger(DatabaseService.name);
+    this.pool = new Pool({
+      connectionString: this.configService.get<string>('DATABASE_URL')
+    });
+  }
 
   getDB(): NodePgDatabase<typeof schema> {
     const nodeEnv = this.configService.get<Environment>('NODE_ENV');
-    const connectionString = this.configService.get<string>('DATABASE_URL');
 
-    const pool = new Pool({
-      connectionString,
-    });
-
-    return drizzle(pool, {
+    return drizzle(this.pool, {
       schema,
-      // casing: 'snake_case',
-      logger: nodeEnv === Environment.DEVELOPMENT,
+      logger: nodeEnv === Environment.DEVELOPMENT
+    });
+  }
+
+  async onApplicationShutdown(signal: string) {
+    return new Promise<void>(async (resolve) => {
+      await this.pool.end();
+      console.log('pg off');
+      resolve();
     });
   }
 }

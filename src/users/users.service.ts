@@ -21,7 +21,6 @@ export class UsersService {
 
   async findOne(username: string) {
     const [user] = await this.db.select().from(schema.users).where(eq(schema.users.username, username));
-
     return user;
   }
 }

@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  user-auth-app:
+    build: ./user-auth-app
+    container_name: user-auth-app
+    restart: always
+    stdin_open: true
+    tty: true
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - '3000:3000'
+    networks:
+      - main-network
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: user-auth-service
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: passwd
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - main-network
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    volumes:
+      - redis_data:/data
+    networks:
+      - main-network
+volumes:
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  main-network:
+    driver: bridge

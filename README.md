@@ -2,6 +2,18 @@
 
 ### How to start the app
 
+```
+docker compose up -d
+```
+
+```
+docker compose run --rm user-auth-app yarn db:generate
+```
+
+```
+docker compose run --rm user-auth-app yarn db:push
+```
+
 ### How to scale the app
 
 Accordind to the concept of vertical and horizontal scaling, you should first pay attention to the server hardware and bandwidth. In scaling an application like that, I would recommend the following steps:

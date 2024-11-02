@@ -10,12 +10,10 @@ RUN yarn install
 
 EXPOSE 3000
 
-COPY src /user-auth-app/src
-
-RUN yarn build
-RUN yarn db:generate
-RUN yarn db:push
-
+COPY src ./src
+COPY drizzle.config.ts ./
 COPY development.env .env
 
-CMD ["node", "./dist/index.js"]
+RUN yarn build
+
+CMD ["node", "./dist/src/main.js"]

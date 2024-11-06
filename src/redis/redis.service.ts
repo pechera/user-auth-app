@@ -28,7 +28,6 @@ export class RedisService {
 
   async onApplicationShutdown(signal: string) {
     return new Promise<void>(async (resolve) => {
-      await this.redisClient.ping();
       await this.redisClient.quit();
       this.logger.log('Redis off');
       resolve();
